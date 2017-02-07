@@ -23,6 +23,3 @@ script:
     - date
     - ls -al
     - make test
-
-    Contact GitHub API Training Shop Blog About 
-
