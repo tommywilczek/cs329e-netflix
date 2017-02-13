@@ -8,7 +8,7 @@
 <td valign=bottom>&nbsp;<br>
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>Netflix</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/v/filer4b/v35q001/ras4653/cs329e/cs329e-netflix/Netflix.py">/v/filer4b/v35q001/ras4653/cs329e/cs329e-netflix/Netflix.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/v/filer4b/v35q001/tsw674/Documents/cs329e-netflix/Netflix.py">/v/filer4b/v35q001/tsw674/Documents/cs329e-netflix/Netflix.py</a></font></td></tr></table>
     <p><tt>#&nbsp;-------<br>
 #&nbsp;imports<br>
 #&nbsp;-------</tt></p>
@@ -30,7 +30,16 @@
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><dl><dt><a name="-create_cache"><strong>create_cache</strong></a>(filename)</dt><dd><tt>filename&nbsp;is&nbsp;the&nbsp;name&nbsp;of&nbsp;the&nbsp;cache&nbsp;file&nbsp;to&nbsp;load<br>
 returns&nbsp;a&nbsp;dictionary&nbsp;after&nbsp;loading&nbsp;the&nbsp;file&nbsp;or&nbsp;pulling&nbsp;the&nbsp;file&nbsp;from&nbsp;the&nbsp;public_html&nbsp;page</tt></dd></dl>
- <dl><dt><a name="-netflix_eval"><strong>netflix_eval</strong></a>(reader, writer)</dt></dl>
+ <dl><dt><a name="-netflix_eval"><strong>netflix_eval</strong></a>(reader, writer)</dt><dd><tt>print&nbsp;("ACTUAL&nbsp;SCORES&nbsp;CACHE!!!!!!!!!!!!!!!!!!!!!!")<br>
+#print&nbsp;(actual_scores_cache)#&nbsp;(723633,&nbsp;10561):&nbsp;3....user,movie,rating<br>
+print&nbsp;("movie_year_cache!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")<br>
+#print&nbsp;(movie_year_cache)#&nbsp;(1065162,&nbsp;15449):&nbsp;2005.....user,movie,when<br>
+print&nbsp;("average_movie_rating_per_year!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")<br>
+#print&nbsp;(average_movie_rating_per_year)#looks&nbsp;like&nbsp;(2034850,&nbsp;2002):&nbsp;3.743<br>
+print&nbsp;("customer_average_rating_yearly!!!!!!!!!!!!!!!!!!!!!!!")<br>
+#print&nbsp;(customer_average_rating_yearly)#looks&nbsp;like&nbsp;(2236702,&nbsp;2001):&nbsp;4.174<br>
+print&nbsp;("decade_avg_cache!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")<br>
+#print&nbsp;(decade_avg_cache)</tt></dd></dl>
 </td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#55aa55">
@@ -38,14 +47,11 @@ returns&nbsp;a&nbsp;dictionary&nbsp;after&nbsp;loading&nbsp;the&nbsp;file&nbsp;o
 <font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><strong>ACTUAL_CUSTOMER_RATING</strong> = {(6, 501): 3, (6, 658): 3, (6, 825): 3, (7, 285): 5, (7, 6408): 5, (7, 8393): 3, (7, 9217): 5, (7, 14759): 3, (8, 1144): 4, (8, 1202): 5, ...}<br>
-<strong>AVERAGE_MOVIE_RATING_PER_YEAR</strong> = {(1, 2004): 3.588, (1, 2005): 3.842, (2, 2004): 3.471, (2, 2005): 3.57, (3, 2003): 3.605, (3, 2004): 3.685, (3, 2005): 3.63, (4, 2003): 1.286, (4, 2004): 2.975, (4, 2005): 2.582, ...}<br>
-<strong>AVERAGE_RATING</strong> = 3.60428996442<br>
-<strong>CUSTOMER_AVERAGE_RATING_YEARLY</strong> = {(6, 2004): 3.604, (6, 2005): 3.229, (7, 2002): 5.0, (7, 2003): 3.625, (7, 2004): 4.005, (7, 2005): 4.021, (8, 2005): 4.214, (10, 2002): 4.0, (10, 2003): 3.224, (10, 2004): 3.24, ...}<br>
-<strong>YEAR_OF_RATING</strong> = {(6, 501): 2005, (6, 658): 2005, (6, 825): 2005, (7, 285): 2005, (7, 6408): 2005, (7, 8393): 2005, (7, 9217): 2005, (7, 14759): 2005, (8, 1144): 2005, (8, 1202): 2005, ...}<br>
-<strong>actual_scores_cache</strong> = {'2003': 3.512220511571782, '1896': 3.6776315789473686, '1930': 3.7082801809115225, '1980': 3.7423828771701966, '1920': 3.791682318218409, '1981': 3.73843167623782, '2005': 3.5497484123919456, '1941': 3.9384931575517586, '1917': 3.4259818731117826, '1995': 3.6614844685770676, ...}<br>
-<strong>decade_avg_cache</strong> = {-1: 2.764766839378237, 1890: 3.6776315789473686, 1900: 2.7889908256880735, 1910: 3.2956877077181495, 1920: 3.608547504897198, 1930: 3.7884918019851783, 1940: 3.8044775264899613, 1950: 3.8411553871167627, 1960: 3.8126487242418143, 1970: 3.774034564806626, ...}<br>
-<strong>movie_year_cache</strong> = {1: '2003', 2: '2004', 3: '1997', 4: '1994', 5: '2004', 6: '1997', 7: '1992', 8: '2004', 9: '1991', 10: '2001', ...}<br>
+<td width="100%"><strong>actual_scores_cache</strong> = {(6, 501): 3, (6, 658): 3, (6, 825): 3, (7, 285): 5, (7, 6408): 5, (7, 8393): 3, (7, 9217): 5, (7, 14759): 3, (8, 1144): 4, (8, 1202): 5, ...}<br>
+<strong>average_movie_rating_per_year</strong> = {(1, 2004): 3.588, (1, 2005): 3.842, (2, 2004): 3.471, (2, 2005): 3.57, (3, 2003): 3.605, (3, 2004): 3.685, (3, 2005): 3.63, (4, 2003): 1.286, (4, 2004): 2.975, (4, 2005): 2.582, ...}<br>
+<strong>customer_average_rating_yearly</strong> = {(6, 2004): 3.604, (6, 2005): 3.229, (7, 2002): 5.0, (7, 2003): 3.625, (7, 2004): 4.005, (7, 2005): 4.021, (8, 2005): 4.214, (10, 2002): 4.0, (10, 2003): 3.224, (10, 2004): 3.24, ...}<br>
+<strong>decade_avg_cache</strong> = {1990: 2.4}<br>
+<strong>movie_year_cache</strong> = {(6, 501): 2005, (6, 658): 2005, (6, 825): 2005, (7, 285): 2005, (7, 6408): 2005, (7, 8393): 2005, (7, 9217): 2005, (7, 14759): 2005, (8, 1144): 2005, (8, 1202): 2005, ...}<br>
 <strong>sqrt</strong> = &lt;ufunc 'sqrt'&gt;<br>
 <strong>square</strong> = &lt;ufunc 'square'&gt;<br>
 <strong>subtract</strong> = &lt;ufunc 'subtract'&gt;</td></tr></table>

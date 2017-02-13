@@ -94,12 +94,18 @@ def netflix_eval(reader, writer) :
         else:
 		# It's a customer
             current_customer = line
-            print("CURRENT CUSTOMER", current_customer)
-
+            print("CURRENT CUSTOMER", type(current_customer))
+            counter = 0
+            sum_total = 0
             for key in customer_average_rating_yearly:
-                
-                if (current_customer == key[0]):
-                    print("IT WORKS!", key)
+                #print ((key[0]))
+                if (int(current_customer) == key[0]):
+                    print("IT WORKS!", key, (customer_average_rating_yearly[key]))
+                    counter += 1
+                    sum_total+= customer_average_rating_yearly[key]
+            sum_total /= counter
+            return (sum_total)
+                    
 
 
             """
@@ -112,3 +118,4 @@ def netflix_eval(reader, writer) :
     rmse = sqrt(mean(square(subtract(predictions, actual))))
     writer.write(str(rmse)[:4] + '\n')
 """
+
