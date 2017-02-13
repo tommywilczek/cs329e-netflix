@@ -98,10 +98,15 @@ def netflix_eval(reader, writer) :
             sum_total /= counter #Get the average rating across all years
             print(sum_total)
             predictions.append(sum_total)
+ 
 
             #figure out actual scores
-
-            actual.append(actual_scores_cache[int(current_movie), int(current_customer)])
+            ##value = actual_scores_cache[int(current_movie), int(current_customer)]
+            print("current customer", current_customer)
+            print("current movie", current_movie)
+            value = actual_scores_cache[int(current_customer), int(current_movie)]
+            print('Value', value)
+            actual.append(value)
             writer.write(str(sum_total)) 
             writer.write('\n')
                     
@@ -116,3 +121,9 @@ def netflix_eval(reader, writer) :
     writer.write(str(rmse)[:4] + '\n')
 
 
+"""
+(1581659, 2612): 2, (772771, 12047): 2, (488926, 14430): 4, (373299, 11328): 4,
+ (2526957, 16967): 4, (659118, 4207): 5, (453940, 710): 5, (723633, 10561): 3, (1306039, 16969): 5, (1961294, 1046): 4, (2269919, 10027): 3,
+ (1535639, 15871): 4, (97749, 16262): 5, (424128, 3917): 5, (1065162, 15449): 4,
+  (1548873, 12501): 5, (792128, 1865): 4, (2185412, 11903): 5
+  """
