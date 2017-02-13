@@ -97,19 +97,22 @@ def netflix_eval(reader, writer) :
                     sum_total+= customer_average_rating_yearly[key]
             sum_total /= counter #Get the average rating across all years
             print(sum_total)
+            predictions.append(sum_total)
+
+            #figure out actual scores
+
+            actual.append(actual_scores_cache[int(current_movie), int(current_customer)])
             writer.write(str(sum_total)) 
             writer.write('\n')
                     
 
 
-            """
-            predictions.append(prediction)
-            actual.append(actual_scores_cache[int(current_movie)][int(current_customer)])
-            writer.write(str(prediction)) 
-            writer.write('\n')
-            """	
-    """# calculate rmse for predications and actuals
+    # calculate rmse for predications and actuals
+    print (predictions)
+    print ()
+    print (actual) 
     rmse = sqrt(mean(square(subtract(predictions, actual))))
+    print (rmse)
     writer.write(str(rmse)[:4] + '\n')
-"""
+
 
