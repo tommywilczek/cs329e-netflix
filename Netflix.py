@@ -60,17 +60,7 @@ decade_avg_cache = {1990: 2.4}
 
 def netflix_eval(reader, writer) :
     
-    """print ("ACTUAL SCORES CACHE!!!!!!!!!!!!!!!!!!!!!!")
-    #print (actual_scores_cache)# (723633, 10561): 3....user,movie,rating
-    print ("movie_year_cache!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    #print (movie_year_cache)# (1065162, 15449): 2005.....user,movie,when
-    print ("average_movie_rating_per_year!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    #print (average_movie_rating_per_year)#looks like (2034850, 2002): 3.743
-    print ("customer_average_rating_yearly!!!!!!!!!!!!!!!!!!!!!!!")
-    #print (customer_average_rating_yearly)#looks like (2236702, 2001): 4.174
-    print ("decade_avg_cache!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    #print (decade_avg_cache)
-"""
+   
    
     predictions = []
     actual = []
@@ -83,28 +73,31 @@ def netflix_eval(reader, writer) :
         if line[-1] == ':':
 		# It's a movie
             current_movie = line.rstrip(':')
+            print('Current Movie', current_movie)
 
-            '''
-            pred = int(movie_year_cache[int(current_movie)])
-            pred = (pred // 10) *10
-            prediction = decade_avg_cache[pred]
+
+            ##pred = int(movie_year_cache[int(current_movie)])
+            ##pred = (pred // 10) *10
+            ##prediction = decade_avg_cache[pred]
+
             writer.write(line)
             writer.write('\n')
-            '''
+            
         else:
 		# It's a customer
             current_customer = line
             print("CURRENT CUSTOMER", type(current_customer))
-            counter = 0
+            counter = 0 #counts number of times the movie was reviewed in years
             sum_total = 0
-            for key in customer_average_rating_yearly:
-                #print ((key[0]))
-                if (int(current_customer) == key[0]):
+            for key in customer_average_rating_yearly: #go through each year movie rating in the cache
+                if (int(current_customer) == key[0]): #If we find a match, add the movie rating from that year so we can avg it
                     print("IT WORKS!", key, (customer_average_rating_yearly[key]))
                     counter += 1
                     sum_total+= customer_average_rating_yearly[key]
-            sum_total /= counter
-            return (sum_total)
+            sum_total /= counter #Get the average rating across all years
+            print(sum_total)
+            writer.write(str(sum_total)) 
+            writer.write('\n')
                     
 
 
