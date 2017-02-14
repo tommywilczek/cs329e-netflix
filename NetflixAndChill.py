@@ -1,5 +1,3 @@
-#Creates test cases
-
 from math import sqrt
 import pickle
 from requests import get
@@ -44,3 +42,44 @@ actual_scores_cache = create_cache("kzk66-year_rating_avg.pickle")
 """
 actual_scores_cache =create_cache(
     "cache-actualCustomerRating.pickle")
+movie_year_cache = create_cache("cache-yearCustomerRatedMovie.pickle")
+average_movie_rating_per_year = create_cache(
+    "cache-movieAverageByYear.pickle")
+customer_average_rating_yearly = create_cache(
+    "cache-customerAverageRatingByYear.pickle")
+
+#print (average_movie_rating_per_year)
+#average_movie_rating_per_year: (4690, 2002): 3.181
+#                               (movie, year): rating 
+
+
+
+def chill():
+    final_cache = {}
+    cache_counter = 0
+    for key in average_movie_rating_per_year:
+        movie_average = 0
+        averager = 0
+        cache_counter += 1
+        counter = 0
+        movie = key[0]
+        
+
+
+        #for key1 in range (cache_counter, len(average_movie_rating_per_year)):
+        for key1 in average_movie_rating_per_year: 
+            for key3 in final_cache:
+                if key3 == key1:
+                    continue
+                 
+                if key1[0] == movie:
+                    counter += 1
+                    print("movie", movie)
+                    rating = average_movie_rating_per_year[key]
+                    averager +=rating 
+            #movie_average /= counter
+            final_cache = {movie: movie_average}
+
+    final_cache = {(movie): ''}
+
+chill()

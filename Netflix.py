@@ -55,17 +55,19 @@ customer_average_rating_yearly = create_cache(
     "cache-customerAverageRatingByYear.pickle")
 decade_avg_cache = {1990: 2.4}
 
+movie_average_rating = create_cache(
+    "rs45899-amm7366-movieAverageRating.pickle")
+
 # ------------
 # netflix_eval
 # ------------
 
 def netflix_eval(reader, writer) :
     
-   
-   
+
     predictions = []
     actual = []
-
+    ratings = []
     # iterate throught the file reader line by line
     for line in reader:
     # need to get rid of the '\n' by the end of the line
@@ -75,8 +77,15 @@ def netflix_eval(reader, writer) :
 		# It's a movie
             current_movie = line.rstrip(':')
             print('Current Movie', current_movie)
+            print('Its rating', movie_average_rating[int(current_movie)])
 
-
+            for key in movie_average_rating:
+                #print ("KEY", key)
+                if int(current_movie) == int(key):
+                    ratings = movie_average_rating[int(current_movie)]
+                    break
+                    
+            print ("RATINGSJSL:DJFSL:DJF:", ratings)
             ##pred = int(movie_year_cache[int(current_movie)])
             ##pred = (pred // 10) *10
             ##prediction = decade_avg_cache[pred]
@@ -86,33 +95,39 @@ def netflix_eval(reader, writer) :
             
         else:
 		# It's a customer
+
+
+        
             current_customer = line
+            '''
             print("CURRENT CUSTOMER", type(current_customer))
             counter = 0 #counts number of times the movie was reviewed in years
             sum_total = 0
-            for key in customer_average_rating_yearly: #go through each year movie rating in the cache
-                if (int(current_customer) == key[0]): #If we find a match, add the movie rating from that year so we can avg it
-                    print("IT WORKS!", key, (customer_average_rating_yearly[key]))
-                    counter += 1
-                    sum_total+= customer_average_rating_yearly[key]
+            for key in movie_average_rating: #go through each year movie rating in the cache
+                print("IT WORKS!", key, (movie_average_rating[key]))
+                counter += 1
+                sum_total+= movie_average_rating[key]
             #if (counter == 0):
             #    continue            
             sum_total /= counter #Get the average rating across all years
             print(sum_total)
             predictions.append(sum_total)
  
-
+            '''
             #figure out actual scores
             ##value = actual_scores_cache[int(current_movie), int(current_customer)]
+            predictions.append(ratings)
             print("current customer", current_customer)
             print("current movie", current_movie)
-            if (counter != 0):
+            value = ratings
+            if (ratings != []):
                 value = actual_scores_cache[int(current_customer), int(current_movie)]
             print('Value', value)
             actual.append(value)
-            writer.write(str(sum_total)) 
+
+            writer.write(str(ratings)) 
             writer.write('\n')
-                    
+            ratings = 0
 
 
     # calculate rmse for predications and actuals
