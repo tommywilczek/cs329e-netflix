@@ -95,6 +95,8 @@ def netflix_eval(reader, writer) :
                     print("IT WORKS!", key, (customer_average_rating_yearly[key]))
                     counter += 1
                     sum_total+= customer_average_rating_yearly[key]
+            #if (counter == 0):
+            #    continue            
             sum_total /= counter #Get the average rating across all years
             print(sum_total)
             predictions.append(sum_total)
@@ -104,7 +106,8 @@ def netflix_eval(reader, writer) :
             ##value = actual_scores_cache[int(current_movie), int(current_customer)]
             print("current customer", current_customer)
             print("current movie", current_movie)
-            value = actual_scores_cache[int(current_customer), int(current_movie)]
+            if (counter != 0):
+                value = actual_scores_cache[int(current_customer), int(current_movie)]
             print('Value', value)
             actual.append(value)
             writer.write(str(sum_total)) 
