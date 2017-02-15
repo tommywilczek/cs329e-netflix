@@ -56,18 +56,16 @@ customer_average_rating_yearly = create_cache(
 decade_avg_cache = {1990: 2.4}
 
 movie_average_rating = create_cache(
-    "rs45899-amm7366-movieAverageRating.pickle")
+    "rs45899-movieAverageRating.pickle")
 
 # ------------
 # netflix_eval
 # ------------
 
 def netflix_eval(reader, writer) :
-    
 
     predictions = []
     actual = []
-    ratings = []
     # iterate throught the file reader line by line
     for line in reader:
     # need to get rid of the '\n' by the end of the line
@@ -78,14 +76,10 @@ def netflix_eval(reader, writer) :
             current_movie = line.rstrip(':')
             print('Current Movie', current_movie)
             print('Its rating', movie_average_rating[int(current_movie)])
+            ratings = movie_average_rating[int(current_movie)]
 
-            for key in movie_average_rating:
-                #print ("KEY", key)
-                if int(current_movie) == int(key):
-                    ratings = movie_average_rating[int(current_movie)]
-                    break
                     
-            print ("RATINGSJSL:DJFSL:DJF:", ratings)
+            print ("RATINGS:   ", ratings)
             ##pred = int(movie_year_cache[int(current_movie)])
             ##pred = (pred // 10) *10
             ##prediction = decade_avg_cache[pred]
@@ -99,7 +93,16 @@ def netflix_eval(reader, writer) :
 
         
             current_customer = line
+            print("CURRENT CUSTOMER", (current_customer))
+
             '''
+            #Took from movie if statement
+            for key in movie_average_rating:
+                #print ("KEY", key)
+                if int(current_movie) == int(key):
+                    ratings.append(movie_average_rating[int(current_movie)])
+                    break   
+
             print("CURRENT CUSTOMER", type(current_customer))
             counter = 0 #counts number of times the movie was reviewed in years
             sum_total = 0
@@ -117,25 +120,28 @@ def netflix_eval(reader, writer) :
             #figure out actual scores
             ##value = actual_scores_cache[int(current_movie), int(current_customer)]
             predictions.append(ratings)
-            print("current customer", current_customer)
-            print("current movie", current_movie)
+            #Problem below: TypeError: 'dict' object is not callable
+            actual_temp = actual_scores_cache[int(current_customer),int(current_movie)]
+            print ("actual_temp", actual_temp)
+            actual.append(actual_temp)
+            '''
             value = ratings
             if (ratings != []):
                 value = actual_scores_cache[int(current_customer), int(current_movie)]
             print('Value', value)
             actual.append(value)
+            '''
 
             writer.write(str(ratings)) 
             writer.write('\n')
-            ratings = 0
 
 
     # calculate rmse for predications and actuals
-    print (predictions)
+    print ("PREDICTIONS: ",predictions)
     print ()
-    print (actual) 
+    print ("ACTUAL IS",actual) 
     rmse = sqrt(mean(square(subtract(predictions, actual))))
-    print (rmse)
+    print ("AND THE RMSE ISSSSS.....",rmse)
     writer.write(str(rmse)[:4] + '\n')
 
 
