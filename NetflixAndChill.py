@@ -1,85 +1,98 @@
-from math import sqrt
 import pickle
-from requests import get
-from os import path
-from numpy import sqrt, square, mean, subtract
+import Netflix
+from os import listdir
+from os.path import isfile, join
+    
+unique_customer_ids_cache_filename = "grm695_wjc656_unique_cust_ids.p"
 
-
-def create_cache(filename):
-    """
-    filename is the name of the cache file to load
-    returns a dictionary after loading the file or pulling the file from the public_html page
-    """
-    cache = {}
-    filePath = "/u/fares/public_html/netflix-caches/" + filename
-
-    if path.isfile(filePath):
-        with open(filePath, "rb") as f:
-            cache = pickle.load(f)
+def update_dict(dictionary, key, value):
+    if key not in dictionary:
+        dictionary[key] = value
     else:
-        webAddress = "http://www.cs.utexas.edu/users/fares/netflix-caches/" + \
-            filename
-        bytes = get(webAddress).content
-        cache = pickle.loads(bytes)
+        dictionary[key] += value
 
-    return cache
+def read_all_movies():
+    total_customer_skew = dict()
+    num_movies_seen = dict()
+    average_movie_ratings = Netflix.netflix_read_file("netflix-tests/ccm2555_ar53446_movie_avg_rating.pickle")
+    average_customer_skew = dict()
 
-"""
-AVERAGE_RATING = 3.60428996442
-ACTUAL_CUSTOMER_RATING = create_cache(
-    "cache-actualCustomerRating.pickle")
-AVERAGE_MOVIE_RATING_PER_YEAR = create_cache(
-    "cache-movieAverageByYear.pickle")
-YEAR_OF_RATING = create_cache("cache-yearCustomerRatedMovie.pickle")
-CUSTOMER_AVERAGE_RATING_YEARLY = create_cache(
-    "cache-customerAverageRatingByYear.pickle")
-
-decade_avg_cache = create_cache("cache-actualCustomerRating.pickle")
-movie_year_cache = create_cache("kzk66-movies_and_years.pickle")
-actual_scores_cache = create_cache("kzk66-year_rating_avg.pickle")
-
-
-"""
-actual_scores_cache =create_cache(
-    "cache-actualCustomerRating.pickle")
-movie_year_cache = create_cache("cache-yearCustomerRatedMovie.pickle")
-average_movie_rating_per_year = create_cache(
-    "cache-movieAverageByYear.pickle")
-customer_average_rating_yearly = create_cache(
-    "cache-customerAverageRatingByYear.pickle")
-
-#print (average_movie_rating_per_year)
-#average_movie_rating_per_year: (4690, 2002): 3.181
-#                               (movie, year): rating 
-
-
-
-def chill():
-    final_cache = {}
-    cache_counter = 0
-    for key in average_movie_rating_per_year:
-        movie_average = 0
-        averager = 0
-        cache_counter += 1
-        counter = 0
-        movie = key[0]
+    training_set_path = '/u/downing/public_html/netflix/training_set/'
+    unique_customer_ids_cache = Netflix.netflix_read_file("netflix-tests/" + unique_customer_ids_cache_filename)
+    i = 0
+    for filename in listdir(training_set_path):
         
+        full_path = join(training_set_path, filename)
+        if isfile(full_path):
+            movie_id, movie_ratings = read_mv_file(full_path)
+            for cust_id, rating in movie_ratings.items():
+                if cust_id in unique_customer_ids_cache:
+                    skew = float(rating) - average_movie_ratings[movie_id]
+                    update_dict(total_customer_skew, cust_id, skew)
+                    update_dict(num_movies_seen, cust_id, 1)
+        i += 1
+        if i % 100 == 0:
+            print(i)
+
+    for cust_id in total_customer_skew:
+        average_customer_skew[cust_id] = round(total_customer_skew[cust_id] / num_movies_seen[cust_id], 2)
+
+    return average_customer_skew
+
+    print("Average customer skew: ", average_customer_skew)
+
+def read_mv_file(filename):
+    movie_ratings = dict()
+    movie_id = -1
+
+    with open(filename) as mv_file:
+        lines = mv_file.readlines()
+        
+        for line in lines:
+            line = line.strip()
+            if ":" in line:
+                movie_id = int(line[:len(line) - 1])
+            else:
+                cust_id = -1
+                rating = -1
+
+                values = line.split(",")
+                assert len(values) == 3
+                cust_id = int(values[0])
+                rating = int(values[1])
+                movie_ratings[cust_id] = rating
+
+    return (movie_id, movie_ratings)
+
+def read_all_customer_ids(input_filename):
+    with open(input_filename) as input_file:
+        unique_customer_ids = set()
+        lines = input_file.readlines()  
+        for line in lines:
+            if ":" not in line:
+                customer_id = int(line.strip())
+                unique_customer_ids.add(customer_id)
+        return unique_customer_ids
+
+def make_average_customer_skew_cache():
+    # Create a cache of average customer skews
+    cache_filename = "grm695_wjc656_avg_cust_skew.p"
+    cache_path = join("netflix-tests/", cache_filename)
+    cache = read_all_movies()
+    with open(cache_path, "wb") as cache_file:
+        pickle.dump(cache, cache_file, protocol=pickle.HIGHEST_PROTOCOL)
+
+def make_unique_customer_id_cache():
+    # Create a cache of average customer skews
+    global unique_customer_ids_cache_filename
+    cache_path = join("netflix-tests/", unique_customer_ids_cache_filename)
+    input_filename = "data/probe.txt"
+    cache = read_all_customer_ids(input_filename)
+    with open(cache_path, "wb") as cache_file:
+        pickle.dump(cache, cache_file, protocol=pickle.HIGHEST_PROTOCOL)
 
 
-        #for key1 in range (cache_counter, len(average_movie_rating_per_year)):
-        for key1 in average_movie_rating_per_year: 
-            for key3 in final_cache:
-                if key3 == key1:
-                    continue
-                 
-                if key1[0] == movie:
-                    counter += 1
-                    print("movie", movie)
-                    rating = average_movie_rating_per_year[key]
-                    averager +=rating 
-            #movie_average /= counter
-            final_cache = {movie: movie_average}
-
-    final_cache = {(movie): ''}
-
-chill()
+if __name__ == "__main__" :
+    #make_test_case("data/mv_0002043.txt")
+    make_average_customer_skew_cache()
+    #make_unique_customer_id_cache()

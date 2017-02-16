@@ -6,11 +6,12 @@
 
 from math import sqrt
 import pickle
+import time
 from requests import get
 from os import path
 from numpy import sqrt, square, mean, subtract
 
-
+start = time.time()
 def create_cache(filename):
     """
     filename is the name of the cache file to load
@@ -55,15 +56,20 @@ customer_average_rating_yearly = create_cache(
     "cache-customerAverageRatingByYear.pickle")
 decade_avg_cache = {1990: 2.4}
 
+customer_avg_rating = create_cache(
+    "mmm5589_customer_avg_rating.pickle")
 movie_average_rating = create_cache(
     "rs45899-movieAverageRating.pickle")
+movie_sd = create_cache(
+    "krk893-njf388-CustomerSTDDiff.pickle")#1048577: 0.93180212486409597
 
 # ------------
 # netflix_eval
 # ------------
 
 def netflix_eval(reader, writer) :
-
+    #print (movie_sd)
+    #return
     predictions = []
     actual = []
     # iterate throught the file reader line by line
@@ -74,12 +80,12 @@ def netflix_eval(reader, writer) :
         if line[-1] == ':':
 		# It's a movie
             current_movie = line.rstrip(':')
-            print('Current Movie', current_movie)
-            print('Its rating', movie_average_rating[int(current_movie)])
+
+
             ratings = movie_average_rating[int(current_movie)]
 
                     
-            print ("RATINGS:   ", ratings)
+            #print ("RATINGS:   ", ratings)
             ##pred = int(movie_year_cache[int(current_movie)])
             ##pred = (pred // 10) *10
             ##prediction = decade_avg_cache[pred]
@@ -93,9 +99,20 @@ def netflix_eval(reader, writer) :
 
         
             current_customer = line
-            print("CURRENT CUSTOMER", (current_customer))
+            #print("CURRENT CUSTOMER", (current_customer))
+
+            #Implementing customer_avg_rating cache, looks like: 1048577: '4.577'
+            #customer_rating = float(customer_avg_rating[int(current_customer)])
+            #print ("CUSTOMER RATING BLAH", customer_rating)
+            
+            standDev = movie_sd[int(current_customer)]
+            fixed_customer_rating = ratings + standDev
 
             '''
+            avgrate = float(((ratings +customer_rating)/2))
+            avgrate = round(avgrate, 2)
+
+
             #Took from movie if statement
             for key in movie_average_rating:
                 #print ("KEY", key)
@@ -119,10 +136,10 @@ def netflix_eval(reader, writer) :
             '''
             #figure out actual scores
             ##value = actual_scores_cache[int(current_movie), int(current_customer)]
-            predictions.append(ratings)
+            predictions.append((fixed_customer_rating))
             #Problem below: TypeError: 'dict' object is not callable
             actual_temp = actual_scores_cache[int(current_customer),int(current_movie)]
-            print ("actual_temp", actual_temp)
+            #print ("actual_temp", actual_temp)
             actual.append(actual_temp)
             '''
             value = ratings
@@ -132,15 +149,17 @@ def netflix_eval(reader, writer) :
             actual.append(value)
             '''
 
-            writer.write(str(ratings)) 
+            writer.write(str(fixed_customer_rating)) 
             writer.write('\n')
 
 
     # calculate rmse for predications and actuals
-    print ("PREDICTIONS: ",predictions)
-    print ()
-    print ("ACTUAL IS",actual) 
+    #print ("PREDICTIONS: ",predictions)
+    #print ()
+    #print ("ACTUAL IS",actual) 
     rmse = sqrt(mean(square(subtract(predictions, actual))))
+    end = time.time()
+    print("TIME", end - start)
     print ("AND THE RMSE ISSSSS.....",rmse)
     writer.write(str(rmse)[:4] + '\n')
 

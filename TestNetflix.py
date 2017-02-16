@@ -19,11 +19,11 @@ class TestNetflix (TestCase):
     # eval
     # ----
     def test_eval_1(self):
-        r = StringIO("2612:\n1581659\n1417435\n")
+        r = StringIO("1:\n30878\n2625019\n2380848\n")
         w = StringIO()
         netflix_eval(r, w)
         self.assertEqual(
-            w.getvalue(), "2612:\n4.2379999999999995\n3.493\n")
+            w.getvalue(), "1:\n3.83\n2.48\n4.72\n")
 
 '''
     def test_eval_1(self):
