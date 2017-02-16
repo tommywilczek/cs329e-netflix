@@ -19,7 +19,6 @@ class TestNetflix (TestCase):
     # eval
 
 
-
     # ----
     def test_eval_1(self):
         r = StringIO("1000:\n2326571\n977808\n1010534\n")
@@ -27,15 +26,20 @@ class TestNetflix (TestCase):
         netflix_eval(r, w)
         self.assertEqual(
             w.getvalue(), "1000:\n3.4\n2.92\n2.89\n0.56\n")
-
-'''
-    def test_eval_1(self):
-        r = StringIO("10040:\n2417853\n1207062\n2487973\n")
+    def test_eval_2(self):
+        r = StringIO("10001:\n262828\n2609496\n1474804\n")
         w = StringIO()
         netflix_eval(r, w)
         self.assertEqual(
-            w.getvalue(), "10040:\n2.4\n2.4\n2.4\n0.90\n.56\n")
-'''
+            w.getvalue(), "10001:\n3.41\n4.21\n3.73\n0.39\n")
+    def test_eval_3(self):
+        r = StringIO("10013:\n2503691\n1222878\n843201\n")
+        w = StringIO()
+        netflix_eval(r, w)
+        self.assertEqual(
+            w.getvalue(), "10013:\n3.67\n3.27\n3.57\n0.48\n")
+
+
 # ----
 # main
 # ----			
