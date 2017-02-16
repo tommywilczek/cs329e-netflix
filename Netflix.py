@@ -96,7 +96,8 @@ def netflix_eval(reader, writer) :
         else:
 		# It's a customer
 
-
+            if type(line)==float:
+                break
         
             current_customer = line
             #print("CURRENT CUSTOMER", (current_customer))
@@ -106,7 +107,7 @@ def netflix_eval(reader, writer) :
             #print ("CUSTOMER RATING BLAH", customer_rating)
             
             standDev = movie_sd[int(current_customer)]
-            fixed_customer_rating = ratings + standDev
+            fixed_customer_rating = round((ratings + standDev), 2)
 
             '''
             avgrate = float(((ratings +customer_rating)/2))
@@ -159,8 +160,8 @@ def netflix_eval(reader, writer) :
     #print ("ACTUAL IS",actual) 
     rmse = sqrt(mean(square(subtract(predictions, actual))))
     end = time.time()
-    print("TIME", end - start)
-    print ("AND THE RMSE ISSSSS.....",rmse)
+    #print("TIME", end - start)
+    #print ("AND THE RMSE ISSSSS.....",rmse)
     writer.write(str(rmse)[:4] + '\n')
 
 
