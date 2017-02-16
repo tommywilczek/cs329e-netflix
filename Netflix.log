@@ -1,3 +1,112 @@
+commit e635d1ed1f1634defa9550f3a887d5355dfd5c6b
+Author: Thomas Wilczek <tsw674@cs.utexas.edu>
+Date:   Thu Feb 16 00:03:56 2017 -0600
+
+    fixed TestNetflix
+
+commit 630bf657325a5ed9b6e8a39149ac2d2f79e4128b
+Author: russell sherrill <ras4653@cs.utexas.edu>
+Date:   Wed Feb 15 23:27:13 2017 -0600
+
+    Eliminated make test error
+
+commit f0a7e8e62b0061482b0e399b5907ae6e853e0822
+Author: Thomas Wilczek <tsw674@cs.utexas.edu>
+Date:   Wed Feb 15 23:09:54 2017 -0600
+
+    Fixing acceptance tests
+
+commit db6fb37c623f234cd9d1eef25d826e9cff02722e
+Author: Thomas Wilczek <tsw674@cs.utexas.edu>
+Date:   Wed Feb 15 22:47:35 2017 -0600
+
+    Used Standard Deviation to achieve rmse of .96, and runtime of 6 seconds
+
+commit f706ab1e3ca2bc3c4ca28e740a5b6bbd38c490f0
+Author: Thomas Wilczek <tsw674@cs.utexas.edu>
+Date:   Wed Feb 15 15:19:07 2017 -0600
+
+    Ran 20000 lines of acceptance tests and got an RMSE of .93, using average movie rating cache.
+
+commit 0d1616ffa068882dc7f12e49d704ed520137846d
+Author: Thomas Wilczek <tsw674@cs.utexas.edu>
+Date:   Tue Feb 14 00:28:36 2017 -0600
+
+    Continued working on creating average movie rating cache
+
+commit 7c55a714222017ddf5f666feb3ab37369d26a720
+Author: Thomas Wilczek <tsw674@cs.utexas.edu>
+Date:   Mon Feb 13 22:36:51 2017 -0600
+
+    Created acceptance tests
+
+commit 83c8c389c5ed2ae5a29b065109023d197d6c8759
+Author: russell sherrill <ras4653@cs.utexas.edu>
+Date:   Mon Feb 13 22:11:33 2017 -0600
+
+    Successfully compared actual to output, RMSE = .99
+
+commit 55496ae7eb56cc596c11128fb718d87b45b0cdbf
+Author: russell sherrill <ras4653@cs.utexas.edu>
+Date:   Sun Feb 12 21:44:16 2017 -0600
+
+    Created connection between actual reviews and predictions
+
+commit 9eec43b25a3d83f0e54b8f50f6197578dca0149c
+Author: Thomas Wilczek <tsw674@cs.utexas.edu>
+Date:   Sun Feb 12 21:31:35 2017 -0600
+
+    Fixed the write
+
+commit ef4639aea2a944f967fe12cd954eaf29013d6e6d
+Author: Thomas Wilczek <tsw674@cs.utexas.edu>
+Date:   Sun Feb 12 21:07:15 2017 -0600
+
+    Solved algorithm with correct write outputs based on aggregates
+
+commit 22e3271e2b58e859debcff5f39266bb10b2f2b51
+Author: Thomas Wilczek <tsw674@cs.utexas.edu>
+Date:   Sun Feb 12 21:02:28 2017 -0600
+
+    cancel
+    shit
+
+commit edf6ac16c631a6bfb48a002d722e4b55446611d1
+Author: Thomas Wilczek <tsw674@cs.utexas.edu>
+Date:   Sun Feb 12 20:34:09 2017 -0600
+
+    Solved simplest possible problem
+
+commit 7ce9b89d75b9b267d24c56518bc9e45b0f418e93
+Author: russell sherrill <ras4653@cs.utexas.edu>
+Date:   Tue Feb 7 21:57:41 2017 -0600
+
+    Figuring out cache proccess
+
+commit 3b71fab3784832ee7c0b03cd781a716d482b79b0
+Author: Thomas Wilczek <tsw674@cs.utexas.edu>
+Date:   Mon Feb 6 22:23:40 2017 -0600
+
+    Analyzed python files and confirmed existin Tests
+
+commit cd83d30526c4390374e0fd226f7bff296a7eaa9f
+Author: Thomas Wilczek <tsw674@cs.utexas.edu>
+Date:   Mon Feb 6 21:58:05 2017 -0600
+
+    Actually fixed .travis.yml file
+
+commit b465c68bc85b8b87cbda9c5d7d245c373f12610b
+Author: Thomas Wilczek <tsw674@cs.utexas.edu>
+Date:   Mon Feb 6 21:47:57 2017 -0600
+
+    Fixed .travis.yml file
+
+commit e1c1c17c023e990796ec247a5e83dbe55534d795
+Author: Thomas Wilczek <tsw674@cs.utexas.edu>
+Date:   Mon Feb 6 21:37:32 2017 -0600
+
+    Cloned public and private repos
+
 commit 96f997a762b06f7087ce42ca1d493018bbb02a73
 Author: tommywilczek <tommywilczek@utexas.edu>
 Date:   Mon Feb 6 21:03:46 2017 -0600
